@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>轮播</title>
+	<script src="jquery.min.js"></script>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	#lb{
+		/*width: 1366px;*/
+		overflow: hidden;
+		height: 200px;
+	}
+	ul,li,img{
+		border: none;
+	}
+		ul{
+			/*width: 3300px;*/
+			position: relative;
+			/*弹性盒子*/
+			display: flex;
+		}
+		ul li{
+			list-style: none;
+			/*width: 320px;*/
+			/*自适应ul的宽（除去maring的剩余宽度的20%）*/
+			width: 20%;
+			margin-right: 10px;
+			float: left;
+		}
+		img{
+			width: 100%;
+			/*border: none;*/
+		}
+	</style>
+</head>
+<body>
+<div id="lb">
+<ul>
+	<li><img src="img/1_002.jpg"></li>
+	<li><img src="img/2_002.jpg"></li>
+	<li><img src="img/3_003.jpg"></li>
+	<li><img src="img/4.jpg"></li>
+	<li><img src="img/5.jpg"></li>
+	<li><img src="img/1_002.jpg"></li>
+	<li><img src="img/2_002.jpg"></li>
+	<li><img src="img/3_003.jpg"></li>
+	<li><img src="img/4.jpg"></li>
+	<li><img src="img/5.jpg"></li>
+</ul>
+<script type="text/javascript">
+		var browser_width = $(document.body).width(); //浏览器宽度
+		$("#lb").css("width",browser_width);//设置div最外层宽度等于浏览器宽度
+		$("#lb ul").css("width",2*browser_width);//设置ul的宽为浏览器的2倍
+		var w=parseFloat($("#lb ul li").css("width"));//获取li的宽度
+		//每次改变窗口大小时就初始化
+		$(window).resize(function() {
+		 browser_width = $(document.body).width(); //从新获取浏览器宽度
+		 $("#lb").css("width",browser_width);
+		 $("#lb ul").css("width",2*browser_width);
+		 w=parseFloat($("#lb ul li").css("width"));//获取li的宽度
+		// console.log(w);
+		$("ul").css("left",0);//回到初始位置
+
+}); 
+	$(function(){
+		
+		setInterval(function(){
+			var l=$("ul").position().left;//获取ul的偏移量
+			if (l<=-(w+10)*5) {//当五幅图片全部显示后拉回到初始位置
+				$("ul").css("left",0);
+				l=0;
+				$("ul"). animate({"left":l-(w+10)/2},500);
+			}else{
+				$("ul"). animate({"left":l-(w+10)/2},500);	//500毫秒内ul移动每个li宽度+间距的距离
+			
+			}
+		},1000)
+
+
+	})
+</script>
+</div>
+</body>
+</html>
