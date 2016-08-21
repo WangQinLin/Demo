@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 	<title>轮播</title>
-	<script src="jquery.min.js"></script>
+	<script src="js/jquery.min.js"></script>
 	<style type="text/css">
 	*{
 		margin: 0;
@@ -55,6 +55,8 @@
 		var browser_width = $(document.body).width(); //浏览器宽度
 		$("#lb").css("width",browser_width);//设置div最外层宽度等于浏览器宽度
 		$("#lb ul").css("width",2*browser_width);//设置ul的宽为浏览器的2倍
+		
+
 		var w=parseFloat($("#lb ul li").css("width"));//获取li的宽度
 		//每次改变窗口大小时就初始化
 		$(window).resize(function() {
@@ -63,23 +65,29 @@
 		 $("#lb ul").css("width",2*browser_width);
 		 w=parseFloat($("#lb ul li").css("width"));//获取li的宽度
 		// console.log(w);
-		$("ul").css("left",0);//回到初始位置
+		//$("ul").css("left",0);//回到初始位置
 
 }); 
 	$(function(){
 		
-		setInterval(function(){
+		var timer=setInterval(carousel,20);
+		function carousel(){
 			var l=$("ul").position().left;//获取ul的偏移量
 			if (l<=-(w+10)*5) {//当五幅图片全部显示后拉回到初始位置
 				$("ul").css("left",0);
 				l=0;
-				$("ul"). animate({"left":l-(w+10)/2},500);
+				$("ul"). animate({"left":l-2},10);
 			}else{
-				$("ul"). animate({"left":l-(w+10)/2},500);	//500毫秒内ul移动每个li宽度+间距的距离
+				$("ul"). animate({"left":l-2},10);	//500毫秒内ul移动每个li宽度+间距的距离
 			
 			}
-		},1000)
-
+		}
+$("ul").mouseover(function(){
+	clearInterval(timer);
+});
+$("ul").mouseout(function(){
+	timer=setInterval(carousel,20);
+});
 
 	})
 </script>
